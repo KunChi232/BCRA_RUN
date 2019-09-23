@@ -10,7 +10,10 @@ def main():
 def initBCRAObject():
     bcra = importr(PACKAGE_NAME, lib_loc=LIBRARY_PATH)
     return bcra
-
+def getExmpleData(bcra):
+    example = data(bcra).fetch('exmapledata')
+    example = example['exampledata']
+    return example
 def getArgument():
     ID = sys.argv[1]
     T1 = sys.argv[2] #age, key_name = age
