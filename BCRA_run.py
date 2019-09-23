@@ -1,10 +1,15 @@
 import sys
+from rpy2.robjects.packages import importr, data
 
 LIBRARY_PATH = 'C:\Users\iir\iir\R\win-library'
 PACKAGE_NAME = 'BCRA'
 
 def main():
     ID, T1, T2, N_Biop, HypPlas, AgeMen, Age1st, N_Rels, Race = getArgument()
+
+def initBCRAObject():
+    bcra = importr(PACKAGE_NAME, lib_loc=LIBRARY_PATH)
+    return bcra
 
 def getArgument():
     ID = sys.argv[1]
