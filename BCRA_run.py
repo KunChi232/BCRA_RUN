@@ -1,5 +1,8 @@
 import sys
 
+LIBRARY_PATH = 'C:\Users\iir\iir\R\win-library'
+PACKAGE_NAME = 'BCRA'
+
 def main():
     ID, T1, T2, N_Biop, HypPlas, AgeMen, Age1st, N_Rels, Race = getArgument()
 
@@ -15,5 +18,6 @@ def getArgument():
     Race = sys.argv[9] # 1=白人, 11=華人。key_name = racial
     
     return ID, T1, T2, N_Biop, HypPlas, AgeMen, Age1st, N_Rels, Race
+
 if __name__ == '__main__':
     main()
