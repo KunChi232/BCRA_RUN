@@ -2,7 +2,7 @@
 ### (一)安裝及設定  
 1. 安裝R, 並將目錄加入環境變數path中  *note:預設:C:\Program Files\R\R-3.6.1*  
 1. [根據python版本下載rpy2.whl](https://www.lfd.uci.edu/~gohlke/pythonlibs/#rpy2)  
-1. 設定變數R_USER, 值為使用者名稱  
+1. 新增環境變數R_USER, 值為使用者名稱  
 1. pip install rpy2.whl    
 
 ### (二)安裝package 
@@ -16,7 +16,7 @@
     echo $output;
 ?>
 ```
-# Agruments
+# Arguments
 **ID**  
 **T1** 填表人目前年齡  
 **T2** 切片時的年齡  
