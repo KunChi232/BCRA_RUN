@@ -1,14 +1,13 @@
 import sys
 import rpy2
 from rpy2.robjects.packages import importr, data
-from rpy2.robjects.vectors import IntVector, FloatVector
 from rpy2.robjects import DataFrame
-LIBRARY_PATH = 'C:/Users/iir/iir/R/win-library'
+LIBRARY_PATH = 'C:/iir/R/win-library/3.6'
 PACKAGE_NAME = 'BCRA'
-use_exmaple = False
+use_exmaple = True
 
 def initBCRAObject():
-    bcra = importr(PACKAGE_NAME, lib_loc=LIBRARY_PATH)
+    bcra = importr(PACKAGE_NAME, lib_loc = LIBRARY_PATH)
     return bcra
 
 def getExmpleData(bcra):
@@ -44,8 +43,7 @@ def main():
         userData = getExmpleData(bcra)
     else:
         userData = createDataFrame()
-    print(userData)
-    return bcra.absolute_risk(userData)
+    print([bcra.absolute_risk(userData, Raw_Ind = 1), bcra.relative_risk(userData, Raw_Ind = 1)])
 
 if __name__ == '__main__':
     main()
