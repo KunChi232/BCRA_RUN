@@ -2,12 +2,11 @@ import sys
 import rpy2
 from rpy2.robjects.packages import importr, data
 from rpy2.robjects import DataFrame
-LIBRARY_PATH = 'C:/iir/R/win-library/3.6'
 PACKAGE_NAME = 'BCRA'
-use_exmaple = True
+use_exmaple = False
 
 def initBCRAObject():
-    bcra = importr(PACKAGE_NAME, lib_loc = LIBRARY_PATH)
+    bcra = importr(PACKAGE_NAME)
     return bcra
 
 def getExmpleData(bcra):
@@ -28,22 +27,35 @@ def getArgument():
     
     return ID, T1, T2, N_Biop, HypPlas, AgeMen, Age1st, N_Rels, Race
 
-def createDataFrame():
-    ID, T1, T2, N_Biop, HypPlas, AgeMen, Age1st, N_Rels, Race = getArgument()
+def createDataFrame(ID, T1, T2, N_Biop, HypPlas, AgeMen, Age1st, N_Rels, Race):
     d = {"ID" : int(ID), "T1" : float(T1), "T2" : float(T2),
         "N_Biop" : int(N_Biop), "HypPlas" : int(HypPlas), "AgeMen" : int(AgeMen),
         "Age1st" : int(Age1st), "N_Rels" : int(N_Rels), "Race" : int(Race)}
     dataFrame = DataFrame(d)
     return dataFrame
 
+def calculate(dataFrame):
+    bcra = initBCRAObject()
+    a_risk = bcra.absolute_risk(dataFrame, Raw_Ind = 1)
+    r_risk = bcra.relative_risk(dataFrame, Raw_Ind = 1)
+    return a_risk, r_risk
+
 def main():
     bcra = initBCRAObject()
     userData = DataFrame({})
     if(use_exmaple):
         userData = getExmpleData(bcra)
+        a_risk = bcra.absolute_risk(userData.rx(5, True), Raw_Ind = 1)
+        r_risk = bcra.relative_risk(userData.rx(5, True), Raw_Ind = 1)
+        print(a_risk[0], r_risk[0][0], r_risk[1][0], r_risk[2][0])
+
     else:
-        userData = createDataFrame()
-    print([bcra.absolute_risk(userData, Raw_Ind = 1), bcra.relative_risk(userData, Raw_Ind = 1)])
+        ID, T1, T2, N_Biop, HypPlas, AgeMen, Age1st, N_Rels, Race = getArgument()
+        userData = createDataFrame(ID, T1, T2, N_Biop, HypPlas, AgeMen, Age1st, N_Rels, Race)
+        a_risk = bcra.absolute_risk(userData, Raw_Ind = 1)
+        r_risk = bcra.relative_risk(userData, Raw_Ind = 1)
+        print(a_risk[0], r_risk[0][0], r_risk[1][0], r_risk[2][0])
+
 
 if __name__ == '__main__':
     main()
